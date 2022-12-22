@@ -1,13 +1,13 @@
-import { ContadorComponent } from './pages/contador/contador.component';
+import { ConversoComponent } from './pages/converso/components/converso.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', redirectTo: 'contador', pathMatch: 'full'
+    path: '', redirectTo: 'converso', pathMatch: 'full'
   },
   {
-    path: 'contador',component:ContadorComponent
+    path: 'converso',component:ConversoComponent
   }
 ];
 

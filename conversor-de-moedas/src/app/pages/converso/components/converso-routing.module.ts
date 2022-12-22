@@ -1,10 +1,10 @@
-import { ContadorComponent } from './contador.component';
+import { ConversoComponent } from './converso.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '', component: ContadorComponent
+    path: '', component: ConversoComponent
   }
 ];
 
@@ -12,4 +12,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ContadorRoutingModule { }
+export class ConversoRoutingModule { }
