@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ConversoRoutingModule } from './converso-routing.module';
+import { ConversorRoutingModule } from './conversor-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    ConversoRoutingModule
+    ConversorRoutingModule
   ]
 })
-export class ConversoModule { }
+export class ConversorModule { }
