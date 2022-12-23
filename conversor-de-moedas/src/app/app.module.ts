@@ -5,8 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConversorComponent } from './pages/converso/components/conversor.component';
+
 import { ConversorModule } from './pages/converso/components';
+import { ConversorComponent } from './pages/converso/components/conversor.component';
 
 @NgModule({
   declarations: [
