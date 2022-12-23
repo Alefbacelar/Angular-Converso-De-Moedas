@@ -1,3 +1,4 @@
+import { Moeda } from './models/moeda.model';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -5,7 +6,8 @@ import { ConversorRoutingModule } from './conversor-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     ConversorRoutingModule
