@@ -1,6 +1,6 @@
 export class Moeda {
   constructor(
-    public silgla?:string,
+    public sigla?:string,
     public descricao?:string
   ){}
 }

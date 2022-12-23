@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Moeda } from '../models';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Conversao, ConversaoResponse, Moeda } from '../models';
+import { ConversoService, MoedaService } from '../services';
 
 @Component({
   selector: 'app-conversor',
@@ -8,61 +10,45 @@ import { Moeda } from '../models';
 })
 export class ConversorComponent implements OnInit {
 
-  private moedas: Moeda[];
+  moedas: Moeda[];
+  conversao: Conversao;
+  possuiErro: boolean;
+  conversaoResponse: ConversaoResponse;
 
-  constructor() { }
+  @ViewChild("conversaoForm", { static: true }) conversaoForm: NgForm;
+  constructor(
+    private moedaService: MoedaService,
+    private conversorService: ConversoService) {}
 
-  private moedasObj = [ //http://fixer.io
-	{ "sigla": "AUD", "descricao": "Dólar australiano" },
-	{ "sigla": "BGN", "descricao": "Lev búlgaro" },
-	{ "sigla": "BRL", "descricao": "Real brasileiro" },
-	{ "sigla": "CAD", "descricao": "Dólar canadense" },
-	{ "sigla": "CHF", "descricao": "Franco suíço" },
-	{ "sigla": "CNY", "descricao": "Yuan Chinês" },
-	{ "sigla": "CZK", "descricao": "Coroa República Tcheca" },
-	{ "sigla": "DKK", "descricao": "Coroa dinamarquesa" },
-	{ "sigla": "EUR", "descricao": "Euro" },
-	{ "sigla": "GBP", "descricao": "Libra Esterlina" },
-	{ "sigla": "HKD", "descricao": "Dólar de Hong Kong" },
-	{ "sigla": "HRK", "descricao": "Coroa Croácia" },
-	{ "sigla": "HUF", "descricao": "Florim húngaro" },
-	{ "sigla": "IDR", "descricao": "Rupia indonésia" },
-	{ "sigla": "ILS", "descricao": "Novo shekel israelense" },
-	{ "sigla": "INR", "descricao": "Rupia indiana" },
-	{ "sigla": "JPY", "descricao": "Iene japonês" },
-	{ "sigla": "KRW", "descricao": "Won sul-coreano" },
-	{ "sigla": "MXN", "descricao": "Peso mexicano" },
-	{ "sigla": "MYR", "descricao": "Malásia Ringgit" },
-	{ "sigla": "NOK", "descricao": "Coroa Noruega" },
-	{ "sigla": "NZD", "descricao": "Dólar da Nova Zelândia" },
-	{ "sigla": "PHP", "descricao": "Peso filipino" },
-	{ "sigla": "PLN", "descricao": "Złoty Polónia" },
-	{ "sigla": "RON", "descricao": "Leu romeno" },
-	{ "sigla": "RUB", "descricao": "Belarus Ruble" },
-	{ "sigla": "SEK", "descricao": "Coroa Suécia" },
-	{ "sigla": "SGD", "descricao": "Dólar de Singapura" },
-	{ "sigla": "THB", "descricao": "Baht Tailândia" },
-	{ "sigla": "TRY", "descricao": "Lira turca" },
-	{ "sigla": "USD", "descricao": "Dólar dos Estados Unidos" },
-	{ "sigla": "ZAR", "descricao": "Rand África do Sul" }
-  ];
-
-  ngOnInit(): void {
+  ngOnInit() {
+  	this.moedas = this.moedaService.listarTodas();
+  	this.init();
   }
 
-  listarTodas(): Moeda[] {
-  	if (this.moedas) {
-  		return this.moedas;
-  	}
-
-  	this.moedas = [];
-
-  	for (let moedaObj of this.moedasObj) {
-  		let moeda: Moeda = new Moeda();
-  		Object.assign(moeda, moedaObj);
-  		this.moedas.push(moeda);
-  	}
-
-  	return this.moedas;
+  /**
+   * Efetua a chamada para a conversão dos valores.
+   *
+   * @return void
+   */
+  init(): void {
+  	this.conversao = new Conversao('USD', 'BRL', null);
+  	this.possuiErro = false;
   }
+
+  /**
+   * Efetua a chamada para a conversão dos valores.
+   *
+   * @return void
+   */
+  converter(): void {
+  	if (this.conversaoForm.form.valid) {
+  	  this.conversorService
+        .converter(this.conversao)
+        .subscribe(
+          response => this.conversaoResponse = response,
+          error => this.possuiErro = true
+        );
+  	}
+  }
+
 }
